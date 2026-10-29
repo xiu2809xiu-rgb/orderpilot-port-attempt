@@ -64,7 +64,7 @@ Each later story adds to the set-up, and updates this guide when it does:
    - the real results of the checks in [Before you push](#before-you-push);
    - for a UI change, screenshots in light and dark from a Docker build of the branch, saved under `docs/design/screenshots/`.
 
-   Add one `type:` label, your area's label (`area: 1 document AI and integration`, `area: 2 order workflows and approvals`, `area: 3 checks, tracker and insights`, `area: 4 controls and monitoring`, or `area: team`) and the `req:` labels it serves.
+   Add one `type:` label, your area's label (`area: 1 document AI and integration`, `area: 2 order workflows and approvals`, `area: 3 checks tracker and insights`, `area: 4 controls and monitoring`, or `area: team`) and the `req:` labels it serves.
 
 6. **Wait for green checks.** There is no CI until P-6, so a pull request shows no checks yet. Each required check joins the ruleset on `main` with the story that brings its job:
 

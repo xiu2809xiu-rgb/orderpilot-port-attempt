@@ -195,7 +195,7 @@ This is the flow in the [working agreement](docs/agile/working-agreement.md) and
     - The real output of step 7, and screenshots in both themes for a UI change.
     - Each shared file you changed and each file you deleted, with the reason.
 
-    Add the labels, with their exact names from `.github/labels.json`: one `type:` label, your area's label and the `req:` labels it serves. The area labels are `area: 1 document AI and integration`, `area: 2 order workflows and approvals`, `area: 3 checks, tracker and insights` and `area: 4 controls and monitoring`, and team work takes `area: team`.
+    Add the labels, with their exact names from `.github/labels.json`: one `type:` label, your area's label and the `req:` labels it serves. The area labels are `area: 1 document AI and integration`, `area: 2 order workflows and approvals`, `area: 3 checks tracker and insights` and `area: 4 controls and monitoring`, and team work takes `area: team`.
 
     ```bash
     gh pr edit <number> --add-label "type: story" --add-label "area: 2 order workflows and approvals" --add-label "req: M4 best practices"

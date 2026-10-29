@@ -25,6 +25,10 @@ A short section per prompt: what each story merged, its checks, and what it left
 | P-1 Ground rules   | [#1](https://github.com/xiu2809xiu-rgb/orderpilot/issues/1) | `docs/ground-rules`    | [#3](https://github.com/xiu2809xiu-rgb/orderpilot/pull/3) | No CI yet (P-6); no pnpm scripts yet (P-5)                                                     | The earlier slide-export and Python ignore rules (they served the slides and the 3D asset scripts; P-22 brings its own)                       |
 | P-2 GitHub as code | [#2](https://github.com/xiu2809xiu-rgb/orderpilot/issues/2) | `chore/github-process` | This pull request                                         | No CI yet (P-6); no pnpm scripts yet (P-5); `node --check` on every script; the seed's dry run | The earlier backlog and its retired keys; the seed's close-on-merge logic (pull requests close their issues); the earlier wiki pages' content |
 
+### Changes to the plan
+
+- **The area 3 label has no comma.** GitHub refuses a comma in a label name (`HTTP 422: Label.name is invalid`), so the label is `area: 3 checks tracker and insights` instead of the plan's `area: 3 checks, tracker and insights`, as Richie chose on 29 Oct 2026 ([#5](https://github.com/xiu2809xiu-rgb/orderpilot/issues/5)). `sync-labels.mjs` renames an area label in place by its number, so the name can change again without losing any issue's label.
+
 ### What only Richie can do
 
 - Upgrade Node to 24.22.0 on this machine, which needs admin rights.

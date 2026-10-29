@@ -8,7 +8,7 @@
 const AREA = {
   1: "area: 1 document AI and integration",
   2: "area: 2 order workflows and approvals",
-  3: "area: 3 checks, tracker and insights",
+  3: "area: 3 checks tracker and insights",
   4: "area: 4 controls and monitoring",
   team: "area: team",
 };
