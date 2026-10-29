@@ -1,0 +1,377 @@
+// Sets up the GitHub Projects board for seed-backlog.mjs: a project linked to
+// the repository, with a Sprint iteration field (one week per module week), an
+// Estimate number field and an Area field, the Backlog and Sprint board views,
+// and every epic and story on it.
+// Needs a token with the `project` scope (gh auth refresh -s project).
+import { SPRINTS } from "./backlog.mjs";
+import { api } from "./gh.mjs";
+import { sprintDates, sprintTitle } from "./sprints.mjs";
+
+const AREAS = [
+  {
+    label: "area: 1 document AI and integration",
+    name: "1 Document AI and integration",
+    color: "GREEN",
+  },
+  {
+    label: "area: 2 order workflows and approvals",
+    name: "2 Order workflows and approvals",
+    color: "BLUE",
+  },
+  {
+    label: "area: 3 checks, tracker and insights",
+    name: "3 Checks, tracker and insights",
+    color: "ORANGE",
+  },
+  { label: "area: 4 controls and monitoring", name: "4 Controls and monitoring", color: "PURPLE" },
+  { label: "area: team", name: "Team", color: "GRAY" },
+];
+
+function graphql(query, variables = {}) {
+  const reply = api("graphql", { method: "POST", body: { query, variables } });
+  if (reply?.errors?.length) {
+    throw new Error(reply.errors.map((error) => error.message).join("; "));
+  }
+  return reply.data;
+}
+
+function findOrCreateProject(repo, title) {
+  const [owner, name] = repo.split("/");
+  const { repository, viewer } = graphql(
+    `
+      query ($owner: String!, $name: String!) {
+        viewer {
+          id
+          projectsV2(first: 50) {
+            nodes {
+              id
+              number
+              title
+            }
+          }
+        }
+        repository(owner: $owner, name: $name) {
+          id
+        }
+      }
+    `,
+    { owner, name },
+  );
+  const existing = viewer.projectsV2.nodes.find((project) => project.title === title);
+  if (existing) return existing;
+  const { createProjectV2 } = graphql(
+    `
+      mutation ($ownerId: ID!, $title: String!, $repositoryId: ID!) {
+        createProjectV2(input: { ownerId: $ownerId, title: $title, repositoryId: $repositoryId }) {
+          projectV2 {
+            id
+            number
+            title
+          }
+        }
+      }
+    `,
+    { ownerId: viewer.id, title, repositoryId: repository.id },
+  );
+  console.log(`created project "${title}"`);
+  return createProjectV2.projectV2;
+}
+
+function fieldsOf(projectId) {
+  const { node } = graphql(
+    `
+      query ($id: ID!) {
+        node(id: $id) {
+          ... on ProjectV2 {
+            fields(first: 50) {
+              nodes {
+                ... on ProjectV2FieldCommon {
+                  id
+                  name
+                  dataType
+                }
+                ... on ProjectV2SingleSelectField {
+                  options {
+                    id
+                    name
+                    color
+                    description
+                  }
+                }
+                ... on ProjectV2IterationField {
+                  configuration {
+                    iterations {
+                      id
+                      title
+                      startDate
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `,
+    { id: projectId },
+  );
+  return new Map(node.fields.nodes.map((field) => [field.name, field]));
+}
+
+function createField(projectId, input) {
+  graphql(
+    `
+      mutation ($input: CreateProjectV2FieldInput!) {
+        createProjectV2Field(input: $input) {
+          projectV2Field {
+            ... on ProjectV2FieldCommon {
+              id
+            }
+          }
+        }
+      }
+    `,
+    { input: { projectId, ...input } },
+  );
+  console.log(`created field "${input.name}"`);
+}
+
+function ensureFields(projectId) {
+  let fields = fieldsOf(projectId);
+  if (!fields.has("Sprint")) {
+    createField(projectId, {
+      dataType: "ITERATION",
+      name: "Sprint",
+      iterationConfiguration: {
+        startDate: sprintDates(1).start,
+        duration: 7,
+        iterations: SPRINTS.map((sprint) => ({
+          title: sprintTitle(sprint.number),
+          startDate: sprintDates(sprint.number).start,
+          duration: 7,
+        })),
+      },
+    });
+  }
+  if (!fields.has("Estimate")) createField(projectId, { dataType: "NUMBER", name: "Estimate" });
+  if (!fields.has("Area")) {
+    createField(projectId, {
+      dataType: "SINGLE_SELECT",
+      name: "Area",
+      singleSelectOptions: AREAS.map((area) => ({
+        name: area.name,
+        color: area.color,
+        description: area.label,
+      })),
+    });
+  } else {
+    syncAreaOptions(fields.get("Area"));
+  }
+  fields = fieldsOf(projectId);
+  return fields;
+}
+
+/**
+ * Renames the Area options to match AREAS. An option is matched by its first
+ * word (the area number, or Team) and keeps its id, so every item keeps its
+ * area; options the team added by hand are kept as they are.
+ */
+function syncAreaOptions(field) {
+  const firstWord = (name) => name.split(" ")[0];
+  const pairs = AREAS.map((area) => ({
+    area,
+    option: field.options.find((option) => firstWord(option.name) === firstWord(area.name)),
+  }));
+  const current = pairs.every(
+    ({ area, option }) =>
+      option?.name === area.name &&
+      option.description === area.label &&
+      option.color === area.color,
+  );
+  if (current) return;
+  const matched = new Set(pairs.map(({ option }) => option?.id).filter(Boolean));
+  graphql(
+    `
+      mutation ($input: UpdateProjectV2FieldInput!) {
+        updateProjectV2Field(input: $input) {
+          projectV2Field {
+            ... on ProjectV2FieldCommon {
+              id
+            }
+          }
+        }
+      }
+    `,
+    {
+      input: {
+        fieldId: field.id,
+        singleSelectOptions: [
+          ...pairs.map(({ area, option }) => ({
+            ...(option ? { id: option.id } : {}),
+            name: area.name,
+            color: area.color,
+            description: area.label,
+          })),
+          ...field.options
+            .filter((option) => !matched.has(option.id))
+            .map(({ id, name, color, description }) => ({ id, name, color, description })),
+        ],
+      },
+    },
+  );
+  console.log("updated the Area field options");
+}
+
+/**
+ * The views the team works from: the backlog table, and the current sprint as
+ * a board with a column per status. The API cannot set grouping, so the
+ * backlog is grouped by Sprint once in the browser (View options, Group by).
+ */
+const VIEWS = [
+  { name: "Backlog", layout: "TABLE_LAYOUT", renames: "View 1" },
+  { name: "Sprint board", layout: "BOARD_LAYOUT", filter: "sprint:@current" },
+];
+
+function viewsOf(projectId) {
+  const { node } = graphql(
+    `
+      query ($id: ID!) {
+        node(id: $id) {
+          ... on ProjectV2 {
+            views(first: 20) {
+              nodes {
+                id
+                name
+                filter
+              }
+            }
+          }
+        }
+      }
+    `,
+    { id: projectId },
+  );
+  return node.views.nodes;
+}
+
+function updateView(viewId, changes) {
+  graphql(
+    `
+      mutation ($input: UpdateProjectV2ViewInput!) {
+        updateProjectV2View(input: $input) {
+          projectV2View {
+            id
+          }
+        }
+      }
+    `,
+    { input: { viewId, ...changes } },
+  );
+}
+
+function ensureViews(projectId) {
+  const views = viewsOf(projectId);
+  for (const view of VIEWS) {
+    let existing = views.find((candidate) => candidate.name === view.name);
+    const placeholder = views.find((candidate) => candidate.name === view.renames);
+    if (!existing && placeholder) {
+      updateView(placeholder.id, { name: view.name });
+      existing = { ...placeholder, name: view.name };
+      console.log(`renamed view "${view.renames}" to "${view.name}"`);
+    }
+    if (!existing) {
+      const { createProjectV2View } = graphql(
+        `
+          mutation ($input: CreateProjectV2ViewInput!) {
+            createProjectV2View(input: $input) {
+              projectV2View {
+                id
+                filter
+              }
+            }
+          }
+        `,
+        { input: { projectId, name: view.name, layout: view.layout } },
+      );
+      existing = createProjectV2View.projectV2View;
+      console.log(`created view "${view.name}"`);
+    }
+    if (view.filter && existing.filter !== view.filter) {
+      updateView(existing.id, { filter: view.filter });
+    }
+  }
+}
+
+function setField(projectId, itemId, fieldId, value) {
+  graphql(
+    `
+      mutation ($input: UpdateProjectV2ItemFieldValueInput!) {
+        updateProjectV2ItemFieldValue(input: $input) {
+          projectV2Item {
+            id
+          }
+        }
+      }
+    `,
+    { input: { projectId, itemId, fieldId, value } },
+  );
+}
+
+/** Puts every epic and story on the board and fills in its sprint, estimate, area and status. */
+export function setUpProject({ repo, title, epics, stories }) {
+  const project = findOrCreateProject(repo, title);
+  const fields = ensureFields(project.id);
+  ensureViews(project.id);
+  const sprint = fields.get("Sprint");
+  const estimate = fields.get("Estimate");
+  const area = fields.get("Area");
+  const status = fields.get("Status");
+  const iterationFor = (number) =>
+    sprint?.configuration?.iterations.find((iteration) => iteration.title === sprintTitle(number))
+      ?.id;
+  const optionFor = (field, name) => field?.options?.find((option) => option.name === name)?.id;
+
+  const add = (issue) =>
+    graphql(
+      `
+        mutation ($projectId: ID!, $contentId: ID!) {
+          addProjectV2ItemById(input: { projectId: $projectId, contentId: $contentId }) {
+            item {
+              id
+              fieldValueByName(name: "Status") {
+                ... on ProjectV2ItemFieldSingleSelectValue {
+                  optionId
+                }
+              }
+            }
+          }
+        }
+      `,
+      { projectId: project.id, contentId: issue.node_id },
+    ).addProjectV2ItemById.item;
+
+  for (const [, epic] of epics) {
+    if (epic) add(epic);
+  }
+  for (const { story, issue, epic } of stories) {
+    const item = add(issue);
+    const itemId = item.id;
+    const iterationId = iterationFor(story.sprint);
+    if (sprint && iterationId) setField(project.id, itemId, sprint.id, { iterationId });
+    if (estimate) setField(project.id, itemId, estimate.id, { number: story.points });
+    const areaName = AREAS.find((entry) => entry.label === epic.area)?.name;
+    const areaOption = areaName ? optionFor(area, areaName) : undefined;
+    if (areaOption) setField(project.id, itemId, area.id, { singleSelectOptionId: areaOption });
+    // A closed issue is Done. An open one starts in Todo, but an item someone has
+    // already moved (to In Progress, say) keeps its status when the seed runs again.
+    let statusName;
+    if (issue.state === "closed") statusName = "Done";
+    else if (!item.fieldValueByName?.optionId) statusName = "Todo";
+    const statusOption = statusName ? optionFor(status, statusName) : undefined;
+    if (statusOption)
+      setField(project.id, itemId, status.id, { singleSelectOptionId: statusOption });
+  }
+  console.log(
+    `project "${title}" has ${String(stories.length)} stories and ${String(epics.size)} epics`,
+  );
+}
