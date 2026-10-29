@@ -2,16 +2,16 @@
 
 We build OrderPilot, our product for Problem Statement #11, Spectra Innovations, in one-week sprints from Monday to Sunday that follow the module weeks. Sprint 1 is the module's Week 2 (26 Oct to 1 Nov 2026), and Sprint _n_ is Week _n_ + 1. The backlog, the board and the pull requests all live in GitHub.
 
-| Document                                                           | What it covers                                                    |
-| ------------------------------------------------------------------ | ----------------------------------------------------------------- |
-| [working-agreement.md](working-agreement.md)                       | Roles, ceremonies, the board, and the path from a story to `main` |
-| [definition-of-ready-and-done.md](definition-of-ready-and-done.md) | When a story may enter a sprint, and when it counts as done       |
+| Document                                                           | What it covers                                                                                                                |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| [working-agreement.md](working-agreement.md)                       | Roles, ceremonies, the board, and the path from a story to `main`                                                             |
+| [definition-of-ready-and-done.md](definition-of-ready-and-done.md) | When a story may enter a sprint, and when it counts as done                                                                   |
+| [backlog.md](backlog.md)                                           | Every epic and story with its acceptance criteria, sprint, estimate and priority, generated from `scripts/github/backlog.mjs` |
 
 The rest of the team's documents come with later stories of the platform base, which [prompt 001](../ai/prompts/001-set-up-and-port-the-base.md) lists in section 5:
 
 | Document                            | What it will cover                                                                                                    | Story |
 | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------- | ----- |
-| `docs/agile/backlog.md`             | Every epic and story with its acceptance criteria, sprint, estimate and priority                                      | P-2   |
 | `docs/agile/hero-journey.md`        | The sales-pilot demo story, and the end-to-end scenarios E2E #1 to #4                                                 | P-3   |
 | `docs/team/module-ownership.md`     | The four ownership areas, their owners and backup owners, the paths each one owns, and the shared files               | P-4   |
 | `docs/agile/test-plan.md`           | Test levels, environments, traceability, the failure and edge-case matrix, entry and exit criteria, schedule, defects | P-6   |
@@ -31,4 +31,4 @@ The rest of the team's documents come with later stories of the platform base, w
 | Protection of `main`                | The ruleset, mirrored in `.github/rulesets/main.json`: pull requests only, no deletion, no force pushes, and each check from the story that brings it |
 | Wiki                                | Pages in `docs/wiki/`, published with `scripts/github/publish-wiki.mjs`                                                                               |
 
-P-2 brings all of this as code. The backlog becomes data in `scripts/github/backlog.mjs`, so changes to the plan are reviewed like code, and once P-2 has merged, its scripts create the labels, the milestones, the board and the backlog's issues, and publish the wiki. Until then, two things are in place: the ruleset on `main`, which already asks for a pull request and refuses deletion and force pushes, and the issues for P-1 and P-2, made by hand, which the backlog script adopts by title.
+All of this is kept as code. The backlog is data in `scripts/github/backlog.mjs`, so a change to the plan is reviewed like code, and `docs/agile/backlog.md` and the wiki's sprint calendar are generated from it (`node scripts/github/render-backlog.mjs`). The scripts in `scripts/github/` create the labels, the milestones, the board and the backlog's issues, and publish the wiki; only Richie runs them. The ruleset is changed in GitHub's settings, and `.github/rulesets/main.json` mirrors it after every change.

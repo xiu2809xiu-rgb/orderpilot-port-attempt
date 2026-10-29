@@ -36,7 +36,7 @@ P-4 brings each area's guide in `docs/team/`, and `docs/team/module-ownership.md
 
 - **One-week sprints,** Monday to Sunday. Sprint 1 is 26 Oct to 1 Nov 2026, the module's Week 2, and Sprint _n_ falls in module Week _n_ + 1. Each sprint has a planning meeting, a written stand-up every working day, a backlog refinement, a review and a retrospective.
 - **One story, one issue, one branch, one pull request.** Each branch starts from the latest `main`, uses Conventional Commits in small commits, and is merged with a merge commit once every required check is green. [CONTRIBUTING.md](CONTRIBUTING.md) has the steps.
-- **The process** is in [docs/agile/](docs/agile/README.md): the [working agreement](docs/agile/working-agreement.md) and the [Definitions of Ready and Done](docs/agile/definition-of-ready-and-done.md). P-2 brings the rest as code: the issue forms, the pull request template, the labels, the milestones `Sprint 01 (W2)` to `Sprint 18 (W19)`, the backlog and the **OrderPilot delivery** board.
+- **The process** is in [docs/agile/](docs/agile/README.md): the [working agreement](docs/agile/working-agreement.md) and the [Definitions of Ready and Done](docs/agile/definition-of-ready-and-done.md). The rest is kept as code: the issue forms, the pull request template, the labels, the milestones `Sprint 01 (W2)` to `Sprint 18 (W19)`, the [backlog](docs/agile/backlog.md) and the **OrderPilot delivery** board, with the scripts that create them in `scripts/github/`, and the [team wiki](https://github.com/xiu2809xiu-rgb/orderpilot/wiki), published from `docs/wiki/`.
 - **AI use:** every AI tool follows [AGENTS.md](AGENTS.md) and [CLAUDE.md](CLAUDE.md). Significant AI-assisted work is recorded in one place, the [AI usage log](docs/ai/ai-usage-log.md), and commits and pull requests carry no AI attribution.
 - **Releases:** a feature freeze in the sprint before each assessment, then a tag on `main`: `v0.1-proposal` (Week 5), `v0.2-technical-review` (Week 13) and `v1.0-final` (Week 18).
 
@@ -44,7 +44,7 @@ P-4 brings each area's guide in `docs/team/`, and `docs/team/module-ownership.md
 
 Our lecturer asked for a repository with only #11's work in it. So the platform base that the team lead started for the team before #11 was allocated comes across story by story: each piece is adapted for OrderPilot and merged through its own issue and pull request, and nothing that served another problem statement comes in ([ADR 0002](docs/adr/0002-clean-repository-for-orderpilot.md)).
 
-So far, the ground rules are in place (P-1). Nothing runs yet: there is no `package.json`, no CI and no app. These stories bring them:
+So far, the ground rules (P-1) and GitHub as code (P-2) are in place. Nothing runs yet: there is no `package.json`, no CI and no app. These stories bring them:
 
 | Story | Brings                                                               |
 | ----- | -------------------------------------------------------------------- |
@@ -65,7 +65,7 @@ The quick start, the ports and the scripts join this README as those stories lan
 | [AGENTS.md](AGENTS.md)                                        | The rules for every AI tool, and for the teammate using it                                                                                                                                  |
 | [CLAUDE.md](CLAUDE.md)                                        | The product, its scope, the stack and the standards                                                                                                                                         |
 | [docs/adr/](docs/adr/README.md)                               | The architecture decisions: [0001](docs/adr/0001-record-architecture-decisions.md) on recording them, and [0002](docs/adr/0002-clean-repository-for-orderpilot.md) on this clean repository |
-| [docs/agile/](docs/agile/README.md)                           | The [working agreement](docs/agile/working-agreement.md) and the [Definitions of Ready and Done](docs/agile/definition-of-ready-and-done.md)                                                |
+| [docs/agile/](docs/agile/README.md)                           | The [working agreement](docs/agile/working-agreement.md), the [Definitions of Ready and Done](docs/agile/definition-of-ready-and-done.md) and the [backlog](docs/agile/backlog.md)          |
 | [AI usage log](docs/ai/ai-usage-log.md)                       | Significant AI-assisted work, with one table per area                                                                                                                                       |
 | [Prompt 001](docs/ai/prompts/001-set-up-and-port-the-base.md) | How this repository is set up and the base is ported, story by story                                                                                                                        |
 | [Build report](docs/BUILD_REPORT.md)                          | A short section for each prompt                                                                                                                                                             |

@@ -20,9 +20,10 @@ A short section per prompt: what each story merged, its checks, and what it left
 
 ### Stories
 
-| Story            | Issue                                                       | Branch              | Pull request      | Checks                                     | Left out                                                                                                                |
-| ---------------- | ----------------------------------------------------------- | ------------------- | ----------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
-| P-1 Ground rules | [#1](https://github.com/xiu2809xiu-rgb/orderpilot/issues/1) | `docs/ground-rules` | This pull request | No CI yet (P-6); no pnpm scripts yet (P-5) | The earlier slide-export and Python ignore rules (they served the slides and the 3D asset scripts; P-22 brings its own) |
+| Story              | Issue                                                       | Branch                 | Pull request                                              | Checks                                                                                         | Left out                                                                                                                                      |
+| ------------------ | ----------------------------------------------------------- | ---------------------- | --------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| P-1 Ground rules   | [#1](https://github.com/xiu2809xiu-rgb/orderpilot/issues/1) | `docs/ground-rules`    | [#3](https://github.com/xiu2809xiu-rgb/orderpilot/pull/3) | No CI yet (P-6); no pnpm scripts yet (P-5)                                                     | The earlier slide-export and Python ignore rules (they served the slides and the 3D asset scripts; P-22 brings its own)                       |
+| P-2 GitHub as code | [#2](https://github.com/xiu2809xiu-rgb/orderpilot/issues/2) | `chore/github-process` | This pull request                                         | No CI yet (P-6); no pnpm scripts yet (P-5); `node --check` on every script; the seed's dry run | The earlier backlog and its retired keys; the seed's close-on-merge logic (pull requests close their issues); the earlier wiki pages' content |
 
 ### What only Richie can do
 
