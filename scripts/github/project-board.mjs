@@ -19,7 +19,7 @@ const AREAS = [
     color: "BLUE",
   },
   {
-    label: "area: 3 checks, tracker and insights",
+    label: "area: 3 checks tracker and insights",
     name: "3 Checks, tracker and insights",
     color: "ORANGE",
   },

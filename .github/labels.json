@@ -50,7 +50,7 @@
     "description": "Sales and purchase workflows, task routing, SPR approvals, SLA reminders, documents, notifications"
   },
   {
-    "name": "area: 3 checks, tracker and insights",
+    "name": "area: 3 checks tracker and insights",
     "color": "8a5a00",
     "description": "Cross-document checks, the exceptions queue, the order tracker, KPIs and insights"
   },
