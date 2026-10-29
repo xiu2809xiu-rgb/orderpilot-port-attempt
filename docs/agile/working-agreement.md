@@ -2,7 +2,7 @@
 
 How the four of us plan, build, review and ship OrderPilot for Spectra Innovations. It turns module requirement 5 (team Git workflow) and the assessment calendar into habits. Change it by pull request, after agreeing at a retrospective.
 
-A practice that depends on something still to come names the story that brings it, such as P-2 for the board. Those stories make up the platform base, and [prompt 001](../ai/prompts/001-set-up-and-port-the-base.md) lists them.
+A practice that depends on something still to come names the story that brings it, such as P-6 for CI. Those stories make up the platform base, and [prompt 001](../ai/prompts/001-set-up-and-port-the-base.md) lists them.
 
 ## Roles
 
@@ -14,7 +14,7 @@ A practice that depends on something still to come names the story that brings i
 
 ## The sprint
 
-One sprint is one week, Monday to Sunday. Sprint 1 is the module's Week 2 (26 Oct to 1 Nov 2026), and Sprint _n_ is Week _n_ + 1, so the 18 sprints run to Week 19 and each assessment week is a sprint of its own: the proposal (Week 5) is Sprint 4, the mock interview (Week 7) Sprint 6, the technical review (Week 13) Sprint 12 and the final presentation (Week 18) Sprint 17. Each sprint is a GitHub milestone, from `Sprint 01 (W2)` to `Sprint 18 (W19)`, and an iteration of the Sprint field on the **OrderPilot delivery** board. P-2 creates both, and its `docs/agile/backlog.md` lists every sprint with its goal.
+One sprint is one week, Monday to Sunday. Sprint 1 is the module's Week 2 (26 Oct to 1 Nov 2026), and Sprint _n_ is Week _n_ + 1, so the 18 sprints run to Week 19 and each assessment week is a sprint of its own: the proposal (Week 5) is Sprint 4, the mock interview (Week 7) Sprint 6, the technical review (Week 13) Sprint 12 and the final presentation (Week 18) Sprint 17. Each sprint is a GitHub milestone, from `Sprint 01 (W2)` to `Sprint 18 (W19)`, and an iteration of the Sprint field on the **OrderPilot delivery** board. The scripts in `scripts/github/` create both, and the [backlog](backlog.md) lists every sprint with its goal.
 
 | Ceremony           | When                                        | Time box   | Output                                                                                                                                                            |
 | ------------------ | ------------------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -30,7 +30,7 @@ One sprint is one week, Monday to Sunday. Sprint 1 is the module's Week 2 (26 Oc
 
 ## The board
 
-The **OrderPilot delivery** project (GitHub Projects) shows every epic and story with its Sprint, Estimate, Area and Status. Two views come with it: **Sprint board**, the current sprint with a column per status, and **Backlog**, the full table. P-2's scripts create the board and both views. Group the Backlog by Sprint once in the browser (View options, then Group by), because GitHub's API cannot set grouping.
+The **OrderPilot delivery** project (GitHub Projects) shows every epic and story with its Sprint, Estimate, Area and Status. Two views come with it: **Sprint board**, the current sprint with a column per status, and **Backlog**, the full table. The scripts in `scripts/github/` create the board and both views. Group the Backlog by Sprint once in the browser (View options, then Group by), because GitHub's API cannot set grouping.
 
 | Status      | Means                                                                                                       | Limit        |
 | ----------- | ----------------------------------------------------------------------------------------------------------- | ------------ |
@@ -45,7 +45,7 @@ An issue is assigned to the one person doing it. Pairing is welcome; the assigne
 1. **Pick** a story from the sprint, assign yourself, and move it to In Progress.
 2. **Branch** from an up-to-date `main`, one task per branch: `feat/<area>-<description>`, `fix/…`, `docs/…`, `chore/…`, `ci/…` or `test/…`.
 3. **Commit** in small Conventional Commits. The hooks that P-5 brings run lint, format, the licence-key guard and the samples guard.
-4. **Open a pull request** with the template filled in (`.github/pull_request_template.md`, from P-2): `Closes #<story>`, the acceptance criteria with evidence, and screenshots in light and dark for UI. A pull request that brings something from the team's earlier base says so first ([ADR 0002](../adr/0002-clean-repository-for-orderpilot.md)).
+4. **Open a pull request** with the template filled in (`.github/pull_request_template.md`): `Closes #<story>`, the acceptance criteria with evidence, and screenshots in light and dark for UI. A pull request that brings something from the team's earlier base says so first ([ADR 0002](../adr/0002-clean-repository-for-orderpilot.md)).
 5. **Checks.** Every check must be green. Each check becomes required with the story that brings its job, from the verify job in P-6 to the end-to-end smoke test in P-15, and CodeQL's code-scanning rule comes with P-14. A finding is fixed or triaged, never ignored (P-14 brings `docs/security/security-testing.md`).
 6. **Review.** The code owner of the touched folder reviews, or the team lead for shared files, and for everything until T-1 names the owners. Reviews come within one working day, and every review thread is resolved before merging. While the team lead builds the platform base alone, the lead's pull requests are checked against the Definition of Done before merging, and teammates may review them afterwards. Once the owners are collaborators, each owner reviews the pull request that brings their area's base.
 7. **Merge** with a merge commit, delete the branch, and the story closes through `Closes #…` and moves to Done.

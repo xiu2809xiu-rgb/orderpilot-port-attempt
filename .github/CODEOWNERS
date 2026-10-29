@@ -1,0 +1,39 @@
+# Code owners (placeholders until T-1).
+#
+# GitHub requests a review from the owner of every path a pull request touches.
+# The owners of the four areas are agreed (CLAUDE.md section 4). Story T-1
+# replaces the placeholder handles below with each member's GitHub username,
+# names a backup owner for each area in docs/team/module-ownership.md, and
+# uncomments the lines. Later rules override earlier ones.
+
+# Area 1: Document AI and integration core (default owner for shared code)
+# *                                          @richie-github-username
+
+# Area 2: Order workflows and approvals
+# /apps/api/src/modules/workflows/           @area-2-github-username @richie-github-username
+# /apps/web/src/features/workflows/          @area-2-github-username @richie-github-username
+# /packages/shared/src/workflows/            @area-2-github-username @richie-github-username
+
+# Area 3: Cross-document checks, order tracker and insights
+# /apps/api/src/modules/checks/              @area-3-github-username @richie-github-username
+# /apps/api/src/modules/reports/             @area-3-github-username @richie-github-username
+# /apps/web/src/features/checks/             @area-3-github-username @richie-github-username
+# /apps/web/src/features/order-tracker/      @area-3-github-username @richie-github-username
+# /packages/shared/src/checks/               @area-3-github-username @richie-github-username
+# /packages/shared/src/reports/              @area-3-github-username @richie-github-username
+
+# Area 4: Financial controls, security and monitoring
+# /apps/api/src/modules/governance/          @area-4-github-username @richie-github-username
+# /apps/api/src/modules/audit/               @area-4-github-username @richie-github-username
+# /apps/api/src/modules/analytics/           @area-4-github-username @richie-github-username
+# /apps/web/src/features/governance/         @area-4-github-username @richie-github-username
+# /apps/web/src/features/analytics/          @area-4-github-username @richie-github-username
+# /packages/shared/src/governance/           @area-4-github-username @richie-github-username
+# /packages/shared/src/audit/                @area-4-github-username @richie-github-username
+# /packages/shared/src/analytics/            @area-4-github-username @richie-github-username
+# /infra/aws/                                @area-4-github-username @richie-github-username
+
+# Shared files: always reviewed by the platform owner
+# /pnpm-lock.yaml                            @richie-github-username
+# /apps/api/prisma/schema.prisma             @richie-github-username
+# /docker-compose.yml                        @richie-github-username

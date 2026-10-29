@@ -14,7 +14,7 @@
 - **Theme:** SCCCI x NYP AI Innovation Challenge
 - **Client:** Spectra Innovations, Problem Statement **#11**, allocated in W2 (26 Oct 2026).
 - **Team:** 4 Year-2 students: Richie (team lead, area 1), Azri (area 2), Iok Teck (area 3) and Angelyn (area 4). Ownership areas are at the end of section 4.
-- **Sprints:** one week each, Monday to Sunday. Sprint 1 is the module's Week 2 (26 Oct to 1 Nov 2026), and Sprint _n_ is module Week _n_ + 1. P-2 brings the milestones, `Sprint 01 (W2)` to `Sprint 18 (W19)`.
+- **Sprints:** one week each, Monday to Sunday. Sprint 1 is the module's Week 2 (26 Oct to 1 Nov 2026), and Sprint _n_ is module Week _n_ + 1. Each sprint is a milestone, `Sprint 01 (W2)` to `Sprint 18 (W19)`, and the backlog in `docs/agile/backlog.md` is generated from `scripts/github/backlog.mjs`.
 - **The base:** the platform base and each area's base land one story at a time, as [prompt 001](docs/ai/prompts/001-set-up-and-port-the-base.md) sets out. Until a story lands, what this file says about its part is the plan; the story that brings it is named where it matters.
 
 ### Assessment (this shapes how we build)
@@ -208,11 +208,15 @@ The layout so far:
 .
 ├── .claude/
 │   └── settings.json             # shared Claude Code settings: AI attribution off
+├── .github/                      # ISSUE_TEMPLATE/, pull_request_template.md, CODEOWNERS, labels.json, rulesets/main.json
 ├── docs/
 │   ├── adr/                      # README.md (the index), 0001 and 0002
-│   ├── agile/                    # README.md, the working agreement, the Definitions of Ready and Done
+│   ├── agile/                    # README.md, the working agreement, the Definitions of Ready and Done, backlog.md (generated)
 │   ├── ai/                       # ai-usage-log.md, prompts/
+│   ├── wiki/                     # the team wiki, published by scripts/github/publish-wiki.mjs
 │   └── BUILD_REPORT.md           # a short section per prompt
+├── scripts/
+│   └── github/                   # labels, milestones, backlog, board and wiki as code (backlog.mjs is the data)
 ├── .editorconfig  .gitattributes  .gitignore  .node-version
 ├── AGENTS.md  CLAUDE.md
 └── README.md  CONTRIBUTING.md  SECURITY.md

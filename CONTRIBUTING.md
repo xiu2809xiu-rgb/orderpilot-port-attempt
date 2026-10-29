@@ -25,7 +25,7 @@ Each later story adds to the set-up, and updates this guide when it does:
 
 ## One story, from issue to `main`
 
-1. **Take the story.** Work only on an issue in the current sprint. Assign yourself and move it to In Progress, with at most two per person. P-2 brings the sprint milestones and the **OrderPilot delivery** board; until then, the issues are in the repository's Issues tab. If the story does not meet the [Definition of Ready](docs/agile/definition-of-ready-and-done.md), raise it before you start.
+1. **Take the story.** Work only on an issue in the current sprint. Assign yourself and move it to In Progress, with at most two per person. Each story is an issue in its sprint's milestone and on the **OrderPilot delivery** board; ask Richie for access to the board if you cannot move items. If the story does not meet the [Definition of Ready](docs/agile/definition-of-ready-and-done.md), raise it before you start.
 
 2. **Branch from the latest `main`,** one story per branch. Never reuse an old branch.
 
@@ -56,7 +56,7 @@ Each later story adds to the set-up, and updates this guide when it does:
 
 4. **Keep the branch up to date.** Before your first push, you may rebase onto the latest `main` (`git fetch origin`, then `git rebase origin/main`). After it, merge `origin/main` instead, so that a force push is never needed. [AGENTS.md](AGENTS.md) explains how to resolve a conflict without losing anyone's work.
 
-5. **Open a pull request to `main`** that closes its issue. P-2 brings the template (`.github/pull_request_template.md`); until then, give the description the same sections:
+5. **Open a pull request to `main`** that closes its issue. Fill in every section of the template (`.github/pull_request_template.md`):
    - what and why, starting with "Ported from the team's earlier base and adapted for OrderPilot" or "New for OrderPilot";
    - `Closes #<issue>`, with one keyword per issue: "Closes #41, closes #42" closes both, while "Closes #41 and #42" closes only the first;
    - the acceptance criteria, each with its evidence: a test name, a screenshot or a log line;
@@ -64,7 +64,7 @@ Each later story adds to the set-up, and updates this guide when it does:
    - the real results of the checks in [Before you push](#before-you-push);
    - for a UI change, screenshots in light and dark from a Docker build of the branch, saved under `docs/design/screenshots/`.
 
-   From P-2, also add one `type:` label, your area's label (`area: 1 document AI and integration`, `area: 2 order workflows and approvals`, `area: 3 checks, tracker and insights`, `area: 4 controls and monitoring`, or `area: team`) and the `req:` labels it serves.
+   Add one `type:` label, your area's label (`area: 1 document AI and integration`, `area: 2 order workflows and approvals`, `area: 3 checks, tracker and insights`, `area: 4 controls and monitoring`, or `area: team`) and the `req:` labels it serves.
 
 6. **Wait for green checks.** There is no CI until P-6, so a pull request shows no checks yet. Each required check joins the ruleset on `main` with the story that brings its job:
 

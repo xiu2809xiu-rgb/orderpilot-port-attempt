@@ -43,7 +43,7 @@ Out of scope:
 | Private vulnerability reporting                                                     | On now    | Repository settings                                                        |
 | Secret scanning with push protection                                                | On now    | Repository settings                                                        |
 | Dependabot alerts and security updates                                              | On now    | Repository settings, with the dependency graph                             |
-| Protection of `main`: a pull request for every change, no force pushes, no deletion | On now    | The ruleset on `main`; P-2 mirrors it in `.github/rulesets/main.json`      |
+| Protection of `main`: a pull request for every change, no force pushes, no deletion | On now    | The ruleset on `main`, mirrored in `.github/rulesets/main.json`            |
 | Read-only default permissions for workflows                                         | On now    | Repository settings                                                        |
 | Dependabot version updates                                                          | From P-5  | `.github/dependabot.yml`                                                   |
 | Licence-key and samples guards in the commit and push hooks                         | From P-5  | `.husky/`, `scripts/check-licence-key.mjs` and `scripts/check-samples.mjs` |

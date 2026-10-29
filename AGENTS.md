@@ -17,7 +17,7 @@
 | 3. Cross-document checks, order tracker and insights | Iok Teck           | `docs/team/area-3-checks-tracker-and-insights.md`      |
 | 4. Financial controls, security and monitoring       | Angelyn            | `docs/team/area-4-controls-security-and-monitoring.md` |
 
-The platform base is still being ported from the team's earlier base, one story at a time ([ADR 0002](docs/adr/0002-clean-repository-for-orderpilot.md) and [section 11](#11-bringing-something-from-the-earlier-base)), so many of the files, commands and checks in this file do not exist yet. Where it matters, the story that brings one is named in brackets, as in "the pull request template (P-2)", and [docs/BUILD_REPORT.md](docs/BUILD_REPORT.md) lists what has landed. The area guides come with P-4, and each area's code with its base stories: C-1 for area 2, D-1 for area 3, and F-1 to F-3 and G-1 for area 4. Richie hands each area to its owner once its base has merged.
+The platform base is still being ported from the team's earlier base, one story at a time ([ADR 0002](docs/adr/0002-clean-repository-for-orderpilot.md) and [section 11](#11-bringing-something-from-the-earlier-base)), so many of the files, commands and checks in this file do not exist yet. Where it matters, the story that brings one is named in brackets, as in "the test plan (P-6)", and [docs/BUILD_REPORT.md](docs/BUILD_REPORT.md) lists what has landed. The area guides come with P-4, and each area's code with its base stories: C-1 for area 2, D-1 for area 3, and F-1 to F-3 and G-1 for area 4. Richie hands each area to its owner once its base has merged.
 
 85% of the module's marks are individual, and at the W7 mock interview each member explains their own code. The base gives every area a starting point, but #11's own business rules in areas 2 to 4 are their owners' to write, each with their own AI, and every line in an area must be something its owner can explain. That is why the boundaries in this file are strict.
 
@@ -75,7 +75,7 @@ Every area changes these files, so a careless edit blocks everyone. Change only 
 
 ### Read-only for areas 2 to 4
 
-Propose changes to these through your human to Richie; do not edit them: `AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`, `docs/BUILD_REPORT.md`, everything in `.github/` (CI, templates, CODEOWNERS, the ruleset), `scripts/github/` (P-2) and the backlog (`docs/agile/backlog.md` is generated from `scripts/github/backlog.mjs`), the working agreement and the Definition of Ready and Done (changed only after the team agrees at a retrospective), the other members' area guides, and the prompts in `docs/ai/prompts/` that are not yours.
+Propose changes to these through your human to Richie; do not edit them: `AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`, `docs/BUILD_REPORT.md`, everything in `.github/` (CI, templates, CODEOWNERS, the ruleset), `scripts/github/` and the backlog (`docs/agile/backlog.md` is generated from `scripts/github/backlog.mjs`), the working agreement and the Definition of Ready and Done (changed only after the team agrees at a retrospective), the other members' area guides, and the prompts in `docs/ai/prompts/` that are not yours.
 
 ## 4. Commands that need your human's OK
 
@@ -102,7 +102,7 @@ This is the flow in the [working agreement](docs/agile/working-agreement.md) and
 
 ### Before you start
 
-1. **Pick the story.** Work only on an issue in the current sprint. One sprint is one week, Monday to Sunday: Sprint 1 is the module's Week 2 (26 Oct to 1 Nov 2026), Sprint _n_ is Week _n_ + 1, and each sprint is a milestone, such as `Sprint 02 (W3)`. Assign your human (`gh issue edit <number> --add-assignee @me`) and move the issue to **In Progress** on the **OrderPilot delivery** board (P-2), at most two per person. If the story does not meet the [Definition of Ready](docs/agile/definition-of-ready-and-done.md#definition-of-ready) (a user and their value, testable acceptance criteria, an estimate, a priority, an area label, no blocker), stop and tell your human.
+1. **Pick the story.** Work only on an issue in the current sprint. One sprint is one week, Monday to Sunday: Sprint 1 is the module's Week 2 (26 Oct to 1 Nov 2026), Sprint _n_ is Week _n_ + 1, and each sprint is a milestone, such as `Sprint 02 (W3)`. Assign your human (`gh issue edit <number> --add-assignee @me`) and move the issue to **In Progress** on the **OrderPilot delivery** board, at most two per person. If the story does not meet the [Definition of Ready](docs/agile/definition-of-ready-and-done.md#definition-of-ready) (a user and their value, testable acceptance criteria, an estimate, a priority, an area label, no blocker), stop and tell your human.
 2. **Start from the latest `main`**, one task per branch:
 
    ```bash
@@ -188,14 +188,14 @@ This is the flow in the [working agreement](docs/agile/working-agreement.md) and
     gh pr create --base main --title "feat(area2): <what it does> (C-<n>)" --body-file <file>
     ```
 
-    Fill in every section of `.github/pull_request_template.md` (P-2):
+    Fill in every section of `.github/pull_request_template.md`:
     - `Closes #<issue>`, with one keyword per issue: `Closes #41, closes #42`. "Closes #41 and #42" closes only #41.
     - The acceptance criteria, each ticked with its evidence: a test name, a screenshot or a log line.
     - Your ownership area, and the module requirements (M1 to M6) it serves.
     - The real output of step 7, and screenshots in both themes for a UI change.
     - Each shared file you changed and each file you deleted, with the reason.
 
-    Add the labels, with their exact names from `.github/labels.json` (P-2): one `type:` label, your area's label and the `req:` labels it serves. The area labels are `area: 1 document AI and integration`, `area: 2 order workflows and approvals`, `area: 3 checks, tracker and insights` and `area: 4 controls and monitoring`, and team work takes `area: team`.
+    Add the labels, with their exact names from `.github/labels.json`: one `type:` label, your area's label and the `req:` labels it serves. The area labels are `area: 1 document AI and integration`, `area: 2 order workflows and approvals`, `area: 3 checks, tracker and insights` and `area: 4 controls and monitoring`, and team work takes `area: team`.
 
     ```bash
     gh pr edit <number> --add-label "type: story" --add-label "area: 2 order workflows and approvals" --add-label "req: M4 best practices"
@@ -232,7 +232,7 @@ This is the flow in the [working agreement](docs/agile/working-agreement.md) and
 
 ## 8. GitHub conventions
 
-P-2 brings these as code: the issue forms, the labels, the milestones and the board.
+These are kept as code: the issue forms and labels in `.github/`, and the milestones, the backlog and the board in `scripts/github/`, which only Richie runs.
 
 | Practice | Convention                                                                                                                                                                                                                           |
 | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

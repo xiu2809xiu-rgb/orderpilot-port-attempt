@@ -1,0 +1,51 @@
+name: Epic
+description: A capability made of several user stories (one per capability A to G, plus the platform and team work).
+title: "Epic: "
+labels: ["type: epic"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Ownership area
+      options:
+        - "Area 1: Document AI and integration core"
+        - "Area 2: Order workflows and approvals"
+        - "Area 3: Cross-document checks, order tracker and insights"
+        - "Area 4: Financial controls, security and monitoring"
+        - "Team: assessments, the client and process"
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal and user value
+      description: The outcome for Spectra's teams (Support, the Product Managers, the approver, the warehouse, Finance, Logistics or management), in one or two sentences.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      value: |
+        **In scope**
+        - …
+
+        **Out of scope**
+        - …
+    validations:
+      required: true
+  - type: textarea
+    id: measures
+    attributes:
+      label: How we know it worked
+      description: Measures from the success metrics in docs/problem-statement.md (section 2.6), or the evidence an assessor will see.
+  - type: textarea
+    id: stories
+    attributes:
+      label: Stories
+      description: Add each story as a sub-issue of this epic. List any not yet written here.
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks and dependencies
+      description: GRS risks (R-xx), assumptions (A-xx) and other epics this one depends on.

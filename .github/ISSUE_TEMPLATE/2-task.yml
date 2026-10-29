@@ -1,0 +1,38 @@
+name: Task
+description: Technical work that serves a story or keeps the project healthy.
+title: "Task: "
+labels: ["type: task"]
+body:
+  - type: input
+    id: parent
+    attributes:
+      label: Parent story or epic
+      description: The issue this task belongs to, e.g. #12. Also add the task to it as a sub-issue.
+      placeholder: "#"
+  - type: dropdown
+    id: area
+    attributes:
+      label: Ownership area
+      options:
+        - "Area 1: Document AI and integration core"
+        - "Area 2: Order workflows and approvals"
+        - "Area 3: Cross-document checks, order tracker and insights"
+        - "Area 4: Financial controls, security and monitoring"
+        - "Team: assessments, the client and process"
+    validations:
+      required: true
+  - type: textarea
+    id: work
+    attributes:
+      label: What needs doing
+    validations:
+      required: true
+  - type: textarea
+    id: checks
+    attributes:
+      label: Done when
+      value: |
+        - [ ] …
+        - [ ] Checks pass and the change is merged through a pull request
+    validations:
+      required: true
