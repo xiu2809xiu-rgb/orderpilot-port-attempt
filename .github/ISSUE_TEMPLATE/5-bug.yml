@@ -1,0 +1,62 @@
+name: Bug report
+description: Something does not work as expected. Security problems go to the private report instead (see SECURITY.md).
+title: "Bug: "
+labels: ["type: bug"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Ownership area
+      options:
+        - "Area 1: Document AI and integration core"
+        - "Area 2: Order workflows and approvals"
+        - "Area 3: Cross-document checks, order tracker and insights"
+        - "Area 4: Financial controls, security and monitoring"
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - "S1: blocks a demo or loses data"
+        - "S2: a feature does not work and there is no workaround"
+        - "S3: a feature misbehaves, with a workaround"
+        - "S4: cosmetic"
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: Include the error message and the traceId from the error panel if there is one.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Sign in as the SYSTEM_ADMIN demo user
+        2. Open Connectors
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: docker compose / local dev, browser and version, theme (light or dark)
+  - type: checkboxes
+    id: data
+    attributes:
+      label: Data check
+      options:
+        - label: This report contains synthetic data only (no real personal data, secrets or licence keys).
+          required: true
